@@ -32,7 +32,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: csharp, dotnet
+        languages: csharp
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
@@ -45,30 +45,18 @@ jobs:
       run: |
         pwd
         ls -lrt
+        ls -lrt ../results/csharp.sarif
 
-    # - name: Setup .NET
-    #   uses: actions/setup-dotnet@v4
-
-    # - name: Restore dependencies
-    #   run: |
-    #     cd dotnet-example
-    #     dotnet restore src/Example.sln
-
-    # - name: Setup MSBuild
-    #   uses: microsoft/setup-msbuild@v1
-
-    # - name: Setup NuGet
-    #   uses: NuGet/setup-nuget@v1.0.5
-      
-    # - name: setup-msbuild
-    #   uses: microsoft/setup-msbuild@v1.1
-
-      
-    
-    # - name: Restore Packages
-    #   run: |
-    #     cd top-ebudgeting
-    #     nuget restore eBudget.sln        
-    
+    - name: Update Sarif Result
+      run: |
+        pwd
+        cp ../results/csharp.sarif my_repo
+        cd my_repo
+        ls -lrt
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Update SARIF security results"
+        git push
    
           
