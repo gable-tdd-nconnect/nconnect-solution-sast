@@ -32,6 +32,11 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
+    - name: Verify Result
+      run: |
+        pwd
+        ls -lrt
+
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
 
