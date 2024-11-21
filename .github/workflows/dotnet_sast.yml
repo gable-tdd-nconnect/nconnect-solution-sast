@@ -32,7 +32,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: csharp
+        languages: csharp, dotnet
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
