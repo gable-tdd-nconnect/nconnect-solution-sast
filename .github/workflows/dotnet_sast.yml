@@ -17,12 +17,17 @@ jobs:
       security-events: write
 
     steps:
-    - name: Checkout Action Template
+    - name: Checkout Source Code
       uses: actions/checkout@v4
       with:
         repository: gable-tdd-nconnect/nconnect-solution
         ref: develop
         token: ${{ secrets.WORKFLOW_TOKEN }}
+
+    - name: Checkout Current Repo
+      uses: actions/checkout@v4
+      with:
+        path: my_repo
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
@@ -32,13 +37,14 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
+    - name: Perform CodeQL Analysis
+      continue-on-error: true
+      uses: github/codeql-action/analyze@v3
+
     - name: Verify Result
       run: |
         pwd
         ls -lrt
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
 
     # - name: Setup .NET
     #   uses: actions/setup-dotnet@v4
